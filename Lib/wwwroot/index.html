@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shedevrobiblioteka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(image1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 20px;
+            /*background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007cdb;
+        }
+
+        .kuks {
+            margin-bottom: 15px;
+        }
+
+            .kuks label {
+                display: block;
+                margin-bottom: 5px;
+                position: center;
+                color: #007bff;
+            }
+
+            .kuks input {
+                width: 100%;
+              padding: 10px;
+               padding-right: 10px;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+
+            .kuks button {
+                width: 102%;
+                padding: 10px;
+                background-color: #d40c0c;
+                color: white;
+                border: solid;
+                border-radius: 10px;
+                border-color: black;
+                cursor: pointer;
+            }
+
+                .kuks button:hover {
+                    background-color: #E30B5C;
+                }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search for Books</h1>
+        <form id="searchForm">
+            <div class="kuks">
+                <label for="authorName">Author Name</label>
+                <input type="text" id="authorName" name="authorName">
+            </div>
+            <div class="kuks">
+                <label for="languageName">Language</label>
+                <input type="text" id="languageName" name="languageName">
+            </div>
+            <div class="kuks">
+                <label for="releaseYear">Release Year</label>
+                <input type="text" id="releaseYear" name="releaseYear">
+            </div>
+            <div class="kuks">
+                <label for="genreName">Genre</label>
+                <input type="text" id="genreName" name="genreName">
+</div>
+<div class="kuks">
+<label for="publisherName">Publisher</label>
+<input type="text" id="publisherName" name="publisherName">
+</div>
+<div class="kuks">
+<label for="title">Title</label>
+<input type="text" id="title" name="title">
+</div>
+<div class="kuks">
+<button type="submit">Search</button>
+</div>
+</form>
+<div class="results" id="results"></div>
+</div>
+
+
+</body>
+</html>
