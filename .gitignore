@@ -1,52 +1,30 @@
-# Prerequisites
-*.d
+# Игнорировать временные файлы сборки
+obj/
+bin/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Игнорировать файлы конфигурации
+*.user
+*.suo
+*.cache
+*.vspscc
 
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
+# Игнорировать файлы логов и отладочной информации
+*.log
+*.logs
 *.pdb
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Игнорировать файлы, созданные IDE
+.vs/
+.vscode/
+
+# Игнорировать файлы среды разработки
+_ReSharper*/
+*.resharper
+*.resharper.user
+
+# Игнорировать файлы настроек проекта
+*.csproj.user
+*.sln.docstates
+
+# Игнорировать временные файлы
+*~
