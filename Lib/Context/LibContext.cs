@@ -2,7 +2,7 @@
 using Lib.Models;
 using Lib.Configurations;
 
-namespace Biblioteka.Context
+namespace Lib.Context
 {
     public class LibContext : DbContext
     {
