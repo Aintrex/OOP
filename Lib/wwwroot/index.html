@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +13,32 @@
             background-size: cover;
             margin: 0;
             padding: 0;
+        }
+
+        #searchForm {
+            margin-bottom: 20px;
+        }
+
+            #searchForm input {
+                margin-right: 10px;
+                padding: 5px;
+            }
+
+        #results table {
+            width: 100%;
+            border-radius: 10px;
+            border-collapse: collapse;
+        }
+
+        #results td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            background-color: #f2f2f2;
+        }
+
+        #results th {
+            border: 1px solid #ddd;
+            background-color: #f2f2f2;
         }
 
         .container {
@@ -28,6 +55,12 @@
             color: #007cdb;
         }
 
+        h2 {
+            text-align: center;
+            color: #d40c0c;
+            text-underline-offset: auto;
+        }
+
         .kuks {
             margin-bottom: 15px;
         }
@@ -41,8 +74,7 @@
 
             .kuks input {
                 width: 100%;
-              padding: 10px;
-               padding-right: 10px;
+                padding: 10px;
                 border: 1px solid black;
                 border-radius: 10px;
             }
@@ -61,44 +93,131 @@
                 .kuks button:hover {
                     background-color: #E30B5C;
                 }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Search for Books</h1>
+        <h1>Search Books</h1>
+        <h2>Case sensative search</h2>
         <form id="searchForm">
             <div class="kuks">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div class="kuks">
                 <label for="authorName">Author Name</label>
-                <input type="text" id="authorName" name="authorName">
+                <input type="text" id="authName" name="authName">
             </div>
             <div class="kuks">
                 <label for="languageName">Language</label>
-                <input type="text" id="languageName" name="languageName">
+                <input type="text" id="lang" name="lang">
+            </div>
+            <div class="kuks">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country">
             </div>
             <div class="kuks">
                 <label for="releaseYear">Release Year</label>
-                <input type="text" id="releaseYear" name="releaseYear">
+                <input type="number" id="year" name="year">
             </div>
             <div class="kuks">
                 <label for="genreName">Genre</label>
-                <input type="text" id="genreName" name="genreName">
-</div>
-<div class="kuks">
-<label for="publisherName">Publisher</label>
-<input type="text" id="publisherName" name="publisherName">
-</div>
-<div class="kuks">
-<label for="title">Title</label>
-<input type="text" id="title" name="title">
-</div>
-<div class="kuks">
-<button type="submit">Search</button>
-</div>
-</form>
-<div class="results" id="results"></div>
-</div>
+                <input type="text" id="genre" name="genre">
+            </div>
+            <div class="kuks">
+                <label for="publisherName">Publisher</label>
+                <input type="text" id="publisher" name="publisher">
+            </div>
+            <div class="kuks">
+                <button type="submit">Search</button>
+            </div>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
 
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            searchBooks();
+        });
 
+        async function searchBooks() {
+            const title = document.getElementById('title').value;
+            const authName = document.getElementById('authName').value;
+            const lang = document.getElementById('lang').value;
+            const publisher = document.getElementById('publisher').value;
+            const country = document.getElementById('country').value;
+            const genre = document.getElementById('genre').value;
+            const year = document.getElementById('year').value;
+
+            const queryParams = new URLSearchParams({
+                title,
+                autName: authName,
+                lang,
+                publisher,
+                country,
+                genre,
+                year
+            });
+
+            try {
+                const response = await fetch(`/api/books/search?${queryParams.toString()}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const books = await response.json();
+                displayBooks(books);
+            } catch (error) {
+                console.error('Error fetching books:', error);
+                document.getElementById('results').innerHTML = '<p>Error fetching books.</p>';
+            }
+        }
+
+        function displayBooks(books) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            if (books.length === 0) {
+                resultsDiv.innerHTML = '<p>No books found.</p>';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>Country</th>
+                                <th>Genre</th>
+                                <th>Language</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
+
+            const tbody = table.querySelector('tbody');
+
+            books.forEach(book => {
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                            <td>${book.title}</td>
+                            <td>${book.author.name}</td>
+                            <td>${book.publisher.name}</td>
+                            <td>${book.country.name}</td>
+                            <td>${book.genre.name}</td>
+                            <td>${book.language.name}</td>
+                            <td>${book.releaseYear.year}</td>
+                        `;
+
+                tbody.appendChild(tr);
+            });
+
+            resultsDiv.appendChild(table);
+        }
+    </script>
 </body>
 </html>
