@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shedevrobiblioteka</title>
     <style>
+        @font-face{
+            font-family: 'Rhytmic_Rus';
+            local: ('Rhytmic_Rus');
+            src: url(Rhythmic_RUS.otf);
+        }
         body {
             font-family: Arial, sans-serif;
             background-image: url(image1.jpg);
@@ -93,9 +98,22 @@
                 .kuks button:hover {
                     background-color: #E30B5C;
                 }
+        header {
+            font-size: 24px;
+            padding: 15px;
+            background-color: gray;
+            text-align: center;
+            color: lightskyblue;
+            border-radius: 0 0 10px 10px;
+            font-family: Rhytmic_RUS;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
+    <header>SHEDEVROBIBLIOTEKA</header>
     <div class="container">
         <h1>Search Books</h1>
         <h2>Case sensative search</h2>
