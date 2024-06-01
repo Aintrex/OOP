@@ -1,0 +1,153 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        @font-face {
+            font-family: 'Rhytmic_RUS';
+            /* local: ('Rhytmic_RUS');*/
+            src: url(Rhythmic_RUS.otf);
+        }
+
+        @font-face {
+            font-family: 'PP';
+            src: url(PPNeueMachina-Regular.otf);
+        }
+        P {
+            width: 100%;
+            background-color: white;
+            font-family: PP;
+            text-align: center;
+            border-radius: 10px;
+        }
+        header {
+            font-size: 24px;
+            padding: 15px;
+            background-color: gray;
+            text-align: center;
+            color: lightskyblue;
+            border-radius: 0 0 10px 10px;
+            font-family: Rhytmic_RUS;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        body {
+            font-family: PP;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(image2.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .login-container {
+            /*background-color: white;*/
+            padding: 20px;
+            border-radius: 5px;
+/*            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+            width: 300px;
+        }
+
+            .login-container h2 {
+                margin-bottom: 20px;
+                text-align: center;
+                color: #007cdb;
+            }
+
+            .login-container input {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .login-container button {
+                width: 100%;
+                padding: 10px;
+                background-color: #d40c0c;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .login-container button:hover {
+                    background-color: #E30B5C;
+                }
+
+        #register-button button {
+            background-color: 5ACA04
+        }
+            #register-button button:hover {
+                background-color: 2DF205;
+            }
+        .error-message {
+            color: black;
+            margin-top: 10px;
+            background-color: white;
+            text-align:center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>SHEDEVROBIBLIOTEKA</header>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <h2></h2>
+        <button id="register-button">Register</button>
+        <div id="error-message" class="error-message"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('login-form');
+            const reg = document.getElementById('register-button');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                await login();
+            });
+            reg.addEventListener('click', function () {
+                window.location.href = 'register.html';
+            });
+        });
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('error-message').innerText = 'Login failed.';
+            }
+        }
+    </script>
+</body>
+</html>
+

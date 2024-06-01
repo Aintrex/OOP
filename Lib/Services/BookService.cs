@@ -7,13 +7,9 @@ namespace Lib.Services
 {
     public interface IBookService
     {
-        Task<IEnumerable<Book>> GetAllBooksAsync();
-
-        Task<Book> GetBookByIdAsync(int id);
-
+      
         Task<int> CreateBook(BookCreate model);
 
-        Task DeleteBook(int id);
         Task<List<Book>> GetBooksFilterAsync(string? title, string? autName, string? publisher, string? country, string? genre, string? lang, int? year);
     }
     public class BookService : IBookService

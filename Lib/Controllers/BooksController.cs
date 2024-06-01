@@ -1,8 +1,8 @@
 ﻿using Lib.ModelReq;
 using Lib.Models;
 using Lib.Services;
-using Lib.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Lib.Controllers
 {
@@ -15,13 +15,6 @@ namespace Lib.Controllers
         public BooksController(IBookService bookService)
         {
             _bookService = bookService;
-        }
-        // GET: api/<BooksController>
-        [HttpGet]
-        public async Task<IActionResult> GetAllBooks()
-        {
-            IEnumerable<Book> books = await _bookService.GetAllBooksAsync();
-            return Ok(books);
         }
 
        // GET api/<BooksController>/5

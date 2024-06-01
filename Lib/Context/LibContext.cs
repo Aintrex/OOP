@@ -6,11 +6,7 @@ namespace Lib.Context
 {
     public class LibContext : DbContext
     {
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //base.OnModelCreating(modelBuilder);
-            
-        //}
+ 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
