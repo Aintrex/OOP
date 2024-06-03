@@ -2,6 +2,7 @@ using Lib.Services;
 using System.Text.Json.Serialization;
 using Lib.Context;
 using Lib.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,13 @@ builder.Services.AddDbContext<LibContext>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 //using (var lib = new LibContext())
 //{
+    //var delu = await lib.Books.FirstOrDefaultAsync(x => x.Id == 4);
+    //var delu1 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 5);
+    //var delu2 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 6);
+    //var delu3 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 7);
+    //var delu4 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 8);
+    //lib.Books.RemoveRange(delu,delu1,delu2,delu3,delu4);
+    //lib.SaveChanges();
 //    Author aut1 = new Author { Name = "Jo Nesbe" };
 //    Author aut2 = new Author { Name = "Stephen King" };
 //    Author aut3 = new Author { Name = "Alexandr Pushkin" };
@@ -64,6 +72,12 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 });
 
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<ICountryInterface, CountryService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
+builder.Services.AddScoped<IPublisherInterface, PublisherService>();
+builder.Services.AddScoped<IReleaseYearInterface, ReleaseYearService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();

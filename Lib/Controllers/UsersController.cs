@@ -52,7 +52,6 @@ namespace Lib.Controllers
         public async Task<IActionResult> LoginUser([FromForm] string username,[FromForm] string password)
         {
             var role = await _userService.LoginUserAsync(username, password);
-
             if (role != "Error")
             {
                 return Ok(new { role });

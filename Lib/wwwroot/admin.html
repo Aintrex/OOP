@@ -1,0 +1,225 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shedevrobiblioteka</title>
+    <style>
+        @font-face {
+            font-family: 'Rhytmic_Rus';
+            src: url(Rhythmic_RUS.otf);
+        }
+
+        @font-face {
+            font-family: 'PP';
+            src: url(PPNeueMachina-Regular.otf);
+        }
+
+        body {
+            font-family: PP;
+            background-image: url(image1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        P {
+            width: 100%;
+            background-color: white;
+            font-family: PP;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        #updateBookForm {
+            margin-bottom: 20px;
+        }
+
+            #updateBookForm input {
+                margin-right: 10px;
+                padding: 5px;
+            }
+
+        #results table {
+            width: 100%;
+            border-radius: 10px;
+            border-collapse: collapse;
+        }
+
+        #results td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            background-color: #f2f2f2;
+        }
+
+        #results th {
+            border: 1px solid #ddd;
+            background-color: #f2f2f2;
+        }
+
+        .update-container {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 20px;
+            /*background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007cdb;
+        }
+
+        h2 {
+            text-align: center;
+            color: #d40c0c;
+            text-underline-offset: auto;
+        }
+
+        .kuks {
+            margin-bottom: 15px;
+        }
+
+            .kuks label {
+                display: block;
+                margin-bottom: 5px;
+                position: center;
+                color: #007bff;
+            }
+
+            .kuks input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+
+            .kuks button {
+                width: 102%;
+                padding: 10px;
+                background-color: #d40c0c;
+                color: white;
+                border: solid;
+                border-radius: 10px;
+                border-color: black;
+                cursor: pointer;
+            }
+
+                .kuks button:hover {
+                    background-color: #E30B5C;
+                }
+
+        header {
+            font-size: 24px;
+            padding: 15px;
+            background-color: gray;
+            text-align: center;
+            color: lightskyblue;
+            border-radius: 0 0 10px 10px;
+            font-family: Rhytmic_RUS;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        sHEDEVROBIBLIOTEKA AS ADMIN
+        <nav>
+            <a href="SearchAdmin.html">Search</a>
+            <a href="Add.html">Add</a>
+        </nav>
+    </header>
+    <div class="update-container">
+        <h1>Update Book Information</h1>
+        <form id="updateBookForm">
+            <div class="kuks">
+                <label for="bookId">Book ID:</label>
+                <input type="number" id="bookId" name="bookId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="authorId">Author ID:</label>
+                <input type="number" id="authorId" name="authorId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="yearId">Year ID:</label>
+                <input type="number" id="yearId" name="yearId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="countryId">Country ID:</label>
+                <input type="number" id="countryId" name="countryId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="publisherId">Publisher ID:</label>
+                <input type="number" id="publisherId" name="publisherId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="languageId">Language ID:</label>
+                <input type="number" id="languageId" name="languageId" required><br><br>
+            </div>
+            <div class="kuks">
+                <label for="genreId">Genre ID:</label>
+                <input type="number" id="genreId" name="genreId" required><br><br>
+            </div>
+            <div class="kuks">
+                <button type="submit">Update Book</button>
+            </div>
+    </div>
+        </form>
+
+    <script>
+        document.getElementById('updateBookForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const bookId = document.getElementById('bookId').value;
+            const title = document.getElementById('title').value;
+            const authorId = document.getElementById('authorId').value;
+            const yearId = document.getElementById('yearId').value;
+            const countryId = document.getElementById('countryId').value;
+            const publisherId = document.getElementById('publisherId').value;
+            const languageId = document.getElementById('languageId').value;
+            const genreId = document.getElementById('genreId').value;
+
+            fetch('api/books/updateBook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Id: parseInt(bookId),
+                    title: title,
+                    authorId: parseInt(authorId),
+                    yearId: parseInt(yearId),
+                    countryId: parseInt(countryId),
+                    publisherId: parseInt(publisherId),
+                    languageId: parseInt(languageId),
+                    genreId: parseInt(genreId)
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Book updated successfully!');
+                    } else {
+                        alert('Failed to update book.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the book.');
+                });
+        });
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>

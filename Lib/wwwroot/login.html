@@ -141,8 +141,21 @@
 
             const data = await response.json();
 
+            //<!--if (response.ok) {
+            //    window.location.href = 'index.html';
+            //} else {
+            //    document.getElementById('error-message').innerText = 'Login failed.';
+            //}
             if (response.ok) {
-                window.location.href = 'index.html';
+                if (data.role == "admin") {
+                    window.location.href = 'admin.html';
+                }
+                     else if (data.role == 'user') {
+                    window.location.href = 'index.html';
+                }
+                else {
+                    document.getElementById('error-message').innerText = 'Unknown role.';
+                }
             } else {
                 document.getElementById('error-message').innerText = 'Login failed.';
             }
