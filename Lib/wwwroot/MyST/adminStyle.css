@@ -1,0 +1,172 @@
+﻿body {
+    font-family: PP;
+    background-image: url(../images/booksimage.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+    margin: 0;
+    padding: 0;
+}
+
+P {
+    width: 100%;
+    background-color: white;
+    font-family: PP;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#updateBookForm {
+    margin-bottom: 20px;
+}
+
+    #updateBookForm input {
+        margin-right: 10px;
+        padding: 5px;
+    }
+
+    #updateBookForm select {
+        margin-right: 10px;
+        padding: 5px;
+        width: 100%;
+        border-radius: 10px;
+        max-height: 150px;
+        overflow-y: auto;
+        resize: vertical;
+    }
+
+
+#results table {
+    width: 100%;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+
+#results td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    background-color: #f2f2f2;
+}
+
+#results th {
+    border: 1px solid #ddd;
+    background-color: #f2f2f2;
+}
+
+.update-container {
+    max-width: 1000px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#books-list {
+    max-width: 1000px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #007cdb;
+}
+
+h2 {
+    text-align: center;
+    color: #d40c0c;
+    text-underline-offset: auto;
+}
+
+.kuks {
+    margin-bottom: 15px;
+}
+
+    .kuks label {
+        display: block;
+        margin-bottom: 5px;
+        position: center;
+        color: #007bff;
+    }
+
+    .kuks input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+
+    .kuks button {
+        width: 100%;
+        padding: 5px;
+        background-color: #d40c0c;
+        color: white;
+        border: solid;
+        border-radius: 10px;
+        border-color: black;
+        cursor: pointer;
+        position: center;
+    }
+
+        .kuks button:hover {
+            background-color: #E30B5C;
+        }
+
+header {
+    font-size: 24px;
+    padding: 15px;
+    background-color: gray;
+    color: lightskyblue;
+    border-radius: 0 0 10px 10px;
+    font-family: Rhytmic_RUS;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.top {
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+    align-items: center;
+}
+
+.username-container {
+    margin-left: 20px;
+}
+
+.title-container {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.cont-but-log {
+    margin-right: 20px;
+}
+
+#header button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+    margin-top: 10px; 
+}
+
+    nav a {
+        margin: 0 15px; 
+    }

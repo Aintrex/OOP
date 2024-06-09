@@ -17,16 +17,21 @@ namespace Lib.Controllers
         }
 
         // GET: api/<GenresController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("getAllGenres")]
+        public async Task<IActionResult> GetGenres()
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<string> gnr = await _genreService.GetAllGenres();
+            return Ok(gnr);
         }
 
         // POST api/<GenresController>
         [HttpPost("addGenre")]
-        public async Task<IActionResult> Createaut([FromBody] GenreCreate model)
+        public async Task<IActionResult> Creategen([FromBody] GenreCreate model)
         {
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                if(!_genreService.ValidString(model.Name)) { return BadRequest(new { success = false, message = "Genre field can't contain digits or special symbols!" }); }
+            }
             int aut = await _genreService.CreateGenre(model.Name);
 
             if (aut != 0)
@@ -34,7 +39,7 @@ namespace Lib.Controllers
                 return Ok(new {success = true});
             }
 
-            return Ok(new { success = false });
+            return Ok(new { success = false, message = "Genre could not be added. It might already exist." });
         }
 
         // PUT api/<GenresController>/5

@@ -1,253 +1,227 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shedevrobiblioteka</title>
-    <style>
-        @font-face{
-            font-family: 'Rhytmic_Rus';
-            src: url(Rhythmic_RUS.otf);
-        }
-       
-        @font-face {
-            font-family: 'PP';
-            src: url(PPNeueMachina-Regular.otf);
-        }
-        body {
-            font-family: PP;
-            background-image: url(image1.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }
-
-        P {
-            width: 100%;
-            background-color: white;
-            font-family: PP;
-            text-align: center;
-            border-radius: 10px;
-        }
-
-        #searchForm {
-            margin-bottom: 20px;
-        }
-
-            #searchForm input {
-                margin-right: 10px;
-                padding: 5px;
-            }
-
-        #results table {
-            width: 100%;
-            border-radius: 10px;
-            border-collapse: collapse;
-        }
-
-        #results td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            background-color: #f2f2f2;
-        }
-
-        #results th {
-            border: 1px solid #ddd;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 100px auto;
-            padding: 20px;
-            /*background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-            border-radius: 5px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #007cdb;
-        }
-
-        h2 {
-            text-align: center;
-            color: #d40c0c;
-            text-underline-offset: auto;
-        }
-
-        .kuks {
-            margin-bottom: 15px;
-        }
-
-            .kuks label {
-                display: block;
-                margin-bottom: 5px;
-                position: center;
-                color: #007bff;
-            }
-
-            .kuks input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid black;
-                border-radius: 10px;
-            }
-
-            .kuks button {
-                width: 102%;
-                padding: 10px;
-                background-color: #d40c0c;
-                color: white;
-                border: solid;
-                border-radius: 10px;
-                border-color: black;
-                cursor: pointer;
-            }
-
-                .kuks button:hover {
-                    background-color: #E30B5C;
-                }
-        header {
-            font-size: 24px;
-            padding: 15px;
-            background-color: gray;
-            text-align: center;
-            color: lightskyblue;
-            border-radius: 0 0 10px 10px;
-            font-family: Rhytmic_RUS;
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-    </style>
+    <script src="AuthCheckUser.js"></script>
+    <link rel="stylesheet" href="MyST/IndexStyle.css">
+    <link rel="stylesheet" href="MyST/FontConnector.css">
 </head>
 <body>
-    <header>SHEDEVROBIBLIOTEKA</header>
-    <div class="container">
-        <h1>Search Books</h1>
-        <h2>Case sensative search</h2>
-        <form id="searchForm">
-            <div class="kuks">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title">
-            </div>
-            <div class="kuks">
-                <label for="authorName">Author Name</label>
-                <input type="text" id="authName" name="authName">
-            </div>
-            <div class="kuks">
-                <label for="languageName">Language</label>
-                <input type="text" id="lang" name="lang">
-            </div>
-            <div class="kuks">
-                <label for="country">Country</label>
-                <input type="text" id="country" name="country">
-            </div>
-            <div class="kuks">
-                <label for="releaseYear">Release Year</label>
-                <input type="number" id="year" name="year">
-            </div>
-            <div class="kuks">
-                <label for="genreName">Genre</label>
-                <input type="text" id="genre" name="genre">
-            </div>
-            <div class="kuks">
-                <label for="publisherName">Publisher</label>
-                <input type="text" id="publisher" name="publisher">
-            </div>
-            <div class="kuks">
-                <button type="submit">Search</button>
-            </div>
-        </form>
-        <div class="results" id="results"></div>
-    </div>
+    <header id="header">
+        <div class="username-container"></div>
+        <div class="title-container">
+            <div class="title">Shedevrobiblioteka</div>
+        </div>
+        <div class="cont-but-log">
+                <button type="button">Logout</button>
+        </div>
+    </header>
+        <div class="container">
+            <h1>Search Books</h1>
+            <h2>Case sensative search</h2>
+            <form id="searchForm">
+                <div class="kuks">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div class="kuks">
+                    <label for="authorName">Author Name</label>
+                    <input type="text" id="authName" name="authName">
+                </div>
+                <div class="kuks">
+                    <label for="languageName">Language</label>
+                    <input type="text" id="lang" name="lang">
+                </div>
+                <div class="kuks">
+                    <label for="country">Country</label>
+                    <input type="text" id="country" name="country">
+                </div>
+                <div class="kuks">
+                    <label for="releaseYear">Release Year</label>
+                    <input type="number" id="year" name="year">
+                </div>
+                <div class="kuks">
+                    <label for="genreName">Genre</label>
+                    <input type="text" id="genre" name="genre">
+                </div>
+                <div class="kuks">
+                    <label for="publisherName">Publisher</label>
+                    <input type="text" id="publisher" name="publisher">
+                </div>
+                <div class="kuks">
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+            <div class="results" id="results"></div>
+        </div>
 
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            searchBooks();
-        });
-
-        async function searchBooks() {
-            const title = document.getElementById('title').value;
-            const authName = document.getElementById('authName').value;
-            const lang = document.getElementById('lang').value;
-            const publisher = document.getElementById('publisher').value;
-            const country = document.getElementById('country').value;
-            const genre = document.getElementById('genre').value;
-            const year = document.getElementById('year').value;
-
-            const queryParams = new URLSearchParams({
-                title,
-                autName: authName,
-                lang,
-                publisher,
-                country,
-                genre,
-                year
+        <script>
+            document.getElementById('header').addEventListener('click', function (event) {
+                event.preventDefault();
+                logout();
             });
+            async function logout() {
+                try {
+                    const response = await fetch('api/users/logout');
 
-            try {
-                const response = await fetch(`/api/books/search?${queryParams.toString()}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    if (response.ok) {
+                        alert('Successful logout');
+                        window.location.href = 'login.html';
+                    }
+                    else alert('Something want wrong');
                 }
-                const books = await response.json();
-                displayBooks(books);
-            } catch (error) {
-                console.error('Error fetching books:', error);
-                document.getElementById('results').innerHTML = '<p>Error fetching books.</p>';
+                catch (error) {
+                    console.error('Error logout:', error);
+                }
             }
-        }
-
-        function displayBooks(books) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = ''; // Clear previous results
-
-            if (books.length === 0) {
-                resultsDiv.innerHTML = '<p>No books found.</p>';
-                return;
+            function nickPrint(username) {
+                const cont = document.querySelector('.username-container')
+                const div = document.createElement('div');
+                div.className = 'UsernameCl';
+                div.textContent = username;
+                cont.appendChild(div);
             }
-
-            const table = document.createElement('table');
-            table.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Publisher</th>
-                                <th>Country</th>
-                                <th>Genre</th>
-                                <th>Language</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    `;
-
-            const tbody = table.querySelector('tbody');
-
-            books.forEach(book => {
-                const tr = document.createElement('tr');
-
-                tr.innerHTML = `
-                            <td>${book.title}</td>
-                            <td>${book.author.name}</td>
-                            <td>${book.publisher.name}</td>
-                            <td>${book.country.name}</td>
-                            <td>${book.genre.name}</td>
-                            <td>${book.language.name}</td>
-                            <td>${book.releaseYear.year}</td>
-                        `;
-
-                tbody.appendChild(tr);
+            fetch('api/users/getLogin')
+                .then(response => response.json())
+                .then(data => nickPrint(data.name))
+                .catch(error => console.error('Error:', error));
+            document.getElementById('searchForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                searchBooks();
             });
 
-            resultsDiv.appendChild(table);
-        }
-    </script>
+            async function searchBooks() {
+                const title = document.getElementById('title').value;
+                const authName = document.getElementById('authName').value;
+                const lang = document.getElementById('lang').value;
+                const publisher = document.getElementById('publisher').value;
+                const country = document.getElementById('country').value;
+                const genre = document.getElementById('genre').value;
+                const year = document.getElementById('year').value;
+
+                const queryParams = new URLSearchParams({
+                    title,
+                    autName: authName,
+                    lang,
+                    publisher,
+                    country,
+                    genre,
+                    year
+                });
+
+                try {
+                    const response = await fetch(`/api/books/search?${queryParams.toString()}`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const books = await response.json();
+                    displayBooks(books);
+                } catch (error) {
+                    console.error('Error fetching books:', error);
+                    document.getElementById('results').innerHTML = '<p>Error fetching books.</p>';
+                }
+            }
+            function ScrollCell(content) {
+                const div = document.createElement('div');
+                div.className = 'scrollbody';
+                div.title = content;
+                div.textContent = content;
+                return div;
+            }
+            function displayBooks(books) {
+
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = ''; // Очистка предыдущих результатов
+
+                const table = document.createElement('table');
+                const thead = table.createTHead();
+                const tbody = table.createTBody();
+                const headerRow = thead.insertRow();
+
+                const headers = ['Title', 'Author', 'Publisher', 'Country', 'Genre', 'Language', 'Year'];
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+
+                books.forEach(book => {
+                    const tr = tbody.insertRow();
+                    const cells = [
+                        book.title,
+                        book.author.name,
+                        book.publisher.name,
+                        book.country.name,
+                        book.genre.name,
+                        book.language.name,
+                        book.releaseYear.year.toString()
+                    ];
+
+                    cells.forEach(content => {
+                        const td = tr.insertCell();
+                        td.appendChild(ScrollCell(content));
+                    });
+
+                    tbody.appendChild(tr);
+                });
+
+                resultsDiv.appendChild(table);
+            }
+        </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+ <!--//const resultsDiv = document.getElementById('results');
+ //resultsDiv.innerHTML = ''; // Clear previous results
+
+ //if (books.length === 0) {
+ //    resultsDiv.innerHTML = '<p>No books found.</p>';
+ //    return;
+ //}
+
+ //const table = document.createElement('table');
+ //table.innerHTML = `
+ //            <thead>
+ //                <tr>
+ //                    <th>Title</th>
+ //                    <th>Author</th>
+ //                    <th>Publisher</th>
+ //                    <th>Country</th>
+ //                    <th>Genre</th>
+ //                    <th>Language</th>
+ //                    <th>Year</th>
+ //                </tr>
+ //            </thead>
+ //            <tbody></tbody>
+ //        `;
+
+ //const tbody = table.querySelector('tbody');
+
+ //books.forEach(book => {
+ //    const tr = document.createElement('tr');
+
+ //    tr.innerHTML = `
+ //                <td>${book.title}</td>
+ //                <td>${book.author.name}</td>
+ //                <td>${book.publisher.name}</td>
+ //                <td>${book.country.name}</td>
+ //                <td>${book.genre.name}</td>
+ //                <td>${book.language.name}</td>
+ //                <td>${book.releaseYear.year}</td>
+ //            `;
+
+ //    tbody.appendChild(tr);
+ //});
+
+ //resultsDiv.appendChild(table);-->

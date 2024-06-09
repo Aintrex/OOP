@@ -1,4 +1,5 @@
 ﻿using Lib.ModelReq;
+using Lib.Models;
 using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,19 @@ namespace Lib.Controllers
         {
             _authorService = authorService;
         }
+        [HttpGet("getAllAuthors")]
+        public async Task<IActionResult> GetAuthors()
+        {
+            IEnumerable<string> auts = await _authorService.GetAllAuthors();
+            return Ok(auts);
+        }
         [HttpPost("addAuthor")]
         public async Task<IActionResult> Createaut([FromBody] AuthorCreate model)
         {
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                if (!_authorService.ValidString(model.Name)) { return BadRequest(new { success = false, message = "Author field can't contain digits or special symbols!" }); }
+            }
             int aut = await _authorService.CreateAuthor(model.Name);
 
             if (aut != 0)
@@ -26,8 +37,8 @@ namespace Lib.Controllers
                 return Ok(new { success = true });
             }
 
-            return Ok(new { success = false });
-        }
+            return Ok(new { success = false, message = "Author could not be added. It might already exist." });
+            }
         // GET: api/<AuthorsController>
     }
 }

@@ -24,22 +24,27 @@ namespace Lib.Controllers
         }
 
         // GET api/<CountriesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("getAllCountries")]
+        public async Task<IActionResult> GetCountries()
         {
-            return "value";
+            IEnumerable<string> cntr = await _country.GetAllCountries();
+            return Ok(cntr);
         }
 
         // POST api/<CountriesController>
         [HttpPost("addCountry")]
         public async Task<IActionResult> CreateCountr([FromBody] CountryCreate model)
         {
+            if(!string.IsNullOrEmpty(model.Name))
+            {
+                if(!_country.ValidString(model.Name)) { return BadRequest(new { sucess = false, message = "Country field cant' contain digits or special symbols" }); }
+            }
             int contry = await _country.CreateCountry(model.Name);
             if (contry !=0)
             {
                 return Ok(new {success=true});
             }
-            return Ok(new { success = false });
+            return Ok(new { success = false, message = "Country could not be added. It might already exist. " });
         }
 
         // PUT api/<CountriesController>/5

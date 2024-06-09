@@ -8,6 +8,8 @@ namespace Lib.Services
     public interface ILanguageService
     {
         Task<int> CreateLang(string name);
+        Task<List<string>> GetAllLanguages();
+        bool ValidString(string str);
     }
     public class LanguageService:ILanguageService
     {
@@ -15,6 +17,16 @@ namespace Lib.Services
         public LanguageService(LibContext context)
         {
             _context = context;
+        }
+        public bool ValidString(string str)
+        {
+            var regex = new System.Text.RegularExpressions.Regex("^[a-zA-Zа-яА-ЯёЁ\\s]+$");
+            return regex.IsMatch(str);
+        }
+        public async Task<List<string>> GetAllLanguages()
+        {
+            var lng = await _context.Languages.OrderBy(x => x.Name).ToListAsync();
+            return lng.Select(x=>x.Name).ToList();
         }
         public async Task<int> CreateLang(string name)
         {

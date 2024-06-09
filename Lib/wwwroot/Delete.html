@@ -22,51 +22,42 @@
         </div>
         <nav>
             <a href="SearchAdmin.html">Search</a>
-            <a href="Add.html">Add</a>
-            <a href="Delete.html">Delete</a>
+            <a href="admin.html">Update</a>
         </nav>
     </header>
-   
     <div class="update-container">
-        <h1>Update Book Information</h1>
-        <form id="updateBookForm">
+        <div class="kuks">
+            <label for="new-author">Author:</label>
+            <!--<input type="text" id="new-author" placeholder="New Author">-->
+            <select id="new-author" class="custom-select" placeholder="New Author" multiple size="5"></select>
+        </div>
+        <div class="kuks">
+            <label for="new-year">Year:</label>
+            <select id="new-year" class="custom-select" placeholder="New Year" multiple size="5"></select>
+        </div>
+        <div class="kuks">
+            <label for="new-country">Country:</label>
+            <select id="new-country" class="custom-select" placeholder="New Country" multiple size="5"></select>
+        </div>
+        <div class="kuks">
+            <label for="new-publisher">Publisher:</label>
+            <select id="new-publisher" class="custom-select" placeholder="New Publisher" multiple size="5"></select>
+        </div>
+        <div class="kuks">
+            <label for="new-language">Language:</label>
+            <select id="new-language" class="custom-select" placeholder="New Language" multiple size="5"></select>
+        </div>
+        <div class="kuks">
+            <label for="new-genre">Genre:</label>
+            <select id="new-genre" class="custom-select" placeholder="New Genre" multiple size="5"></select>
+        </div>
+        <h1>Add Book</h1>
+        <form id="addBookForm">
             <div class="kuks">
-                <label for="existing-title">ExistTitle:</label>
-                <!--<input type="text" id="existing-title" name="existing-title" required><br><br>-->
-                <select id="existing-title" class="custom-select" name="existing-title" required multiple size="15">
-                </select>
-            </div>
-            <div class="kuks">
-                <label for="new-title">New Title:</label>
-                <input type="text" id="new-title" placeholder="New Title">
-            </div>
-            <div class="kuks">
-                <label for="new-author">Author:</label>
-                <!--<input type="text" id="new-author" placeholder="New Author">-->
-                <select id="new-author" class="custom-select" placeholder="New Author" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <label for="new-year">Year:</label>
-                <select id="new-year" class="custom-select" placeholder="New Year" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <label for="new-country">Country:</label>
-                <select id="new-country" class="custom-select" placeholder="New Country" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <label for="new-publisher">Publisher:</label>
-                <select id="new-publisher" class="custom-select" placeholder="New Publisher" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <label for="new-language">Language:</label>
-                <select id="new-language" class="custom-select" placeholder="New Language" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <label for="new-genre">Genre:</label>
-                <select id="new-genre" class="custom-select" placeholder="New Genre" multiple size="5"></select>
-            </div>
-            <div class="kuks">
-                <button type="submit">Update Book</button>
+                <label for="title">Book Title:</label>
+                <select type="text" id="existing-Title" name="title" required></select>
+
+                <button type="submit">Add Book</button>
             </div>
         </form>
     </div>
@@ -153,56 +144,7 @@
                 .then(data => populateSelect(document.getElementById('new-genre'), data))
                 .catch(error => console.error('Error:', error));
         });
-
-        document.getElementById('updateBookForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const existingTitle = document.getElementById('existing-title').value;
-            const newTitle = document.getElementById('new-title').value;
-            const newAuthor = document.getElementById('new-author').value;
-            const newYear = document.getElementById('new-year').value;
-            const newCountry = document.getElementById('new-country').value;
-            const newPublisher = document.getElementById('new-publisher').value;
-            const newLanguage = document.getElementById('new-language').value;
-            const newGenre = document.getElementById('new-genre').value;
-
-
-
-            if (!newTitle && !newAuthor && !newYear && !newCountry && !newPublisher && !newLanguage && !newGenre) {
-                alert('At least one new field must be provided.');
-                return;
-            }
-
-            fetch('api/books/updateBook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    existingTitle: existingTitle,
-                    newTitle: newTitle,
-                    newAuthor: newAuthor,
-                    newYear: newYear ? parseInt(newYear) : null,
-                    newCountry: newCountry,
-                    newPublisher: newPublisher,
-                    newLanguage: newLanguage,
-                    newGenre: newGenre
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Book updated successfully!');
-                        window.location.reload();
-                    } else {
-                        alert(`Failed to update book. Reason: ${data.message}`);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while updating the book.');
-                });
-        });
     </script>
+
 </body>
 </html>

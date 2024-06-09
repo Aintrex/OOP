@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using Lib.Context;
 using Lib.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +14,17 @@ builder.Services.AddDbContext<LibContext>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 //using (var lib = new LibContext())
 //{
-    //var delu = await lib.Books.FirstOrDefaultAsync(x => x.Id == 4);
-    //var delu1 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 5);
-    //var delu2 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 6);
-    //var delu3 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 7);
-    //var delu4 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 8);
-    //lib.Books.RemoveRange(delu,delu1,delu2,delu3,delu4);
-    //lib.SaveChanges();
+//    var year = lib.Releaseyears.FirstOrDefault(x => x.Id == 5);
+//    lib.Releaseyears.Remove(year);
+//    lib.SaveChanges();
+//    var aut = lib.Authors.FirstOrDefault(x => x.Id == 5);
+//var delu = await lib.Books.FirstOrDefaultAsync(x => x.Id == 4);
+//var delu1 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 5);
+//var delu2 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 6);
+//var delu3 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 7);
+//var delu4 = await lib.Books.FirstOrDefaultAsync(x => x.Id == 8);
+//lib.Books.RemoveRange(delu,delu1,delu2,delu3,delu4);
+//lib.SaveChanges();
 //    Author aut1 = new Author { Name = "Jo Nesbe" };
 //    Author aut2 = new Author { Name = "Stephen King" };
 //    Author aut3 = new Author { Name = "Alexandr Pushkin" };
@@ -70,7 +76,14 @@ builder.Services.AddControllers().AddJsonOptions(x =>
     // Ignore possible object cycles
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/user/login";
+                options.LogoutPath = "/user/logout";
+            }); 
 
+            
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<ICountryInterface, CountryService>();
@@ -79,9 +92,33 @@ builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IPublisherInterface, PublisherService>();
 builder.Services.AddScoped<IReleaseYearInterface, ReleaseYearService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
+bool cookieDel = false;
+app.Use(async (context, next) =>
+{
+    if (!cookieDel)
+    {
+        foreach (var cookie in context.Request.Cookies.Keys)
+        {
+            context.Response.Cookies.Delete(cookie);
+        }
+        cookieDel = true;
+    }
 
+    await next.Invoke();
+}); 
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Cookies.ContainsKey("SessionStarted"))
+    {
+        context.Response.Cookies.Append("SessionStarted", "true");
+        context.Response.Redirect("/login.html");
+        return;
+    }
+
+    await next.Invoke();
+});
 // Configure the HTTP request pipeline.
 
 
@@ -97,7 +134,6 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-
     endpoints.MapFallbackToFile("/login.html");
 });
 

@@ -24,7 +24,12 @@ namespace Lib.Controllers
         }
 
         // GET api/<LanguagesController>/5
-        [HttpGet("{id}")]
+        [HttpGet("getAllLanguages")]
+        public async Task<IActionResult> GetLanguages()
+        {
+            IEnumerable<string> lng = await _languageService.GetAllLanguages();
+            return Ok(lng);
+        }
         public string Get(int id)
         {
             return "value";
@@ -34,12 +39,16 @@ namespace Lib.Controllers
         [HttpPost("addLanguage")]
         public async Task<ActionResult> CreateLang([FromBody] LanguageCreate model)
         {
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                if (!_languageService.ValidString(model.Name)) { return BadRequest(new { success = false, message = "Language field can't contain digits or special symbols!" }); }
+            }
             var lan = await _languageService.CreateLang(model.Name);
             if (lan !=0)
             {
                 return Ok(new { success = true });
             }
-            return Ok(new { success = false });
+            return Ok(new { success = false, message = "Language could not be added. It might already exist." });
         }
 
         // PUT api/<LanguagesController>/5

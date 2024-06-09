@@ -5,130 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shedevrobiblioteka</title>
-    <style>
-        @font-face {
-            font-family: 'Rhytmic_Rus';
-            src: url(Rhythmic_RUS.otf);
-        }
-
-        @font-face {
-            font-family: 'PP';
-            src: url(PPNeueMachina-Regular.otf);
-        }
-
-        body {
-            font-family: PP;
-            background-image: url(image1.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }
-
-        P {
-            width: 100%;
-            background-color: white;
-            font-family: PP;
-            text-align: center;
-            border-radius: 10px;
-        }
-
-        #searchForm {
-            margin-bottom: 20px;
-        }
-
-            #searchForm input {
-                margin-right: 10px;
-                padding: 5px;
-            }
-
-        #results table {
-            width: 100%;
-            border-radius: 10px;
-            border-collapse: collapse;
-        }
-
-        #results td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            background-color: #f2f2f2;
-        }
-
-        #results th {
-            border: 1px solid #ddd;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 100px auto;
-            padding: 20px;
-            /*background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-            border-radius: 5px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #007cdb;
-        }
-
-        h2 {
-            text-align: center;
-            color: #d40c0c;
-            text-underline-offset: auto;
-        }
-
-        .kuks {
-            margin-bottom: 15px;
-        }
-
-            .kuks label {
-                display: block;
-                margin-bottom: 5px;
-                position: center;
-                color: #007bff;
-            }
-
-            .kuks input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid black;
-                border-radius: 10px;
-            }
-
-            .kuks button {
-                width: 102%;
-                padding: 10px;
-                background-color: #d40c0c;
-                color: white;
-                border: solid;
-                border-radius: 10px;
-                border-color: black;
-                cursor: pointer;
-            }
-
-                .kuks button:hover {
-                    background-color: #E30B5C;
-                }
-
-        header {
-            font-size: 24px;
-            padding: 15px;
-            background-color: gray;
-            text-align: center;
-            color: lightskyblue;
-            border-radius: 0 0 10px 10px;
-            font-family: Rhytmic_RUS;
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-    </style>
+    <script src="AuhtCheckAdmin.js"></script>
+    <link rel="stylesheet" href="MyST/SearchAdmin.css" />
+    <link rel="stylesheet" href="MyST/FontConnector.css" />
 </head>
 <body>
-    <header>
-        SHEDEVROBIBLIOTEKA
+    <header id="header">
+        <div class="top">
+            <div class="username-container"></div>
+            <div class="title-container">
+                <div class="title">Shedevrobiblioteka</div>
+            </div>
+            <div class="cont-but-log">
+                <button id="Button" type="button">Logout</button>
+            </div>
+        </div>
         <nav>
             <a href="admin.html">Update</a>
             <a href="Add.html">Add</a>
@@ -174,6 +65,35 @@
     </div>
 
     <script>
+        document.getElementById('Button').addEventListener('click', function (event) {
+            event.preventDefault();
+            logout();
+        });
+        async function logout() {
+            try {
+                const response = await fetch('api/users/logout');
+
+                if (response.ok) {
+                    alert('Successful logout');
+                    window.location.href = 'login.html';
+                }
+                else alert('Something want wrong');
+            }
+            catch (error) {
+                console.error('Error logout:', error);
+            }
+        }
+        function nickPrint(username) {
+            const cont = document.querySelector('.username-container')
+            const div = document.createElement('div');
+            div.className = 'UsernameCl';
+            div.textContent = username;
+            cont.appendChild(div);
+        }
+        fetch('api/users/getLogin')
+            .then(response => response.json())
+            .then(data => nickPrint(data.name))
+            .catch(error => console.error('Error:', error));
         document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault();
             searchBooks();
@@ -210,52 +130,134 @@
                 document.getElementById('results').innerHTML = '<p>Error fetching books.</p>';
             }
         }
-
+        function ScrollCell(content) {
+            const div = document.createElement('div');
+            div.className = 'scrollbody';
+            div.title = content;
+            div.textContent = content;
+            return div;
+        }
         function displayBooks(books) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = ''; // Clear previous results
 
-            if (books.length === 0) {
-                resultsDiv.innerHTML = '<p>No books found.</p>';
-                return;
-            }
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Очистка предыдущих результатов
 
             const table = document.createElement('table');
-            table.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Publisher</th>
-                                <th>Country</th>
-                                <th>Genre</th>
-                                <th>Language</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    `;
+            const thead = table.createTHead();
+            const tbody = table.createTBody();
+            const headerRow = thead.insertRow();
 
-            const tbody = table.querySelector('tbody');
+            const headers = ['Title', 'Author', 'Publisher', 'Country', 'Genre', 'Language', 'Year'];
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
 
             books.forEach(book => {
-                const tr = document.createElement('tr');
+                const tr = tbody.insertRow();
+                const cells = [
+                    book.title,
+                    book.author.name,
+                    book.publisher.name,
+                    book.country.name,
+                    book.genre.name,
+                    book.language.name,
+                    book.releaseYear.year.toString()
+                ];
 
-                tr.innerHTML = `
-                            <td>${book.title}</td>
-                            <td>${book.author.name}</td>
-                            <td>${book.publisher.name}</td>
-                            <td>${book.country.name}</td>
-                            <td>${book.genre.name}</td>
-                            <td>${book.language.name}</td>
-                            <td>${book.releaseYear.year}</td>
-                        `;
+                cells.forEach(content => {
+                    const td = tr.insertCell();
+                    td.appendChild(ScrollCell(content));
+                });
 
                 tbody.appendChild(tr);
             });
 
             resultsDiv.appendChild(table);
         }
+        //document.getElementById('searchForm').addEventListener('submit', function (event) {
+        //    event.preventDefault();
+        //    searchBooks();
+        //});
+
+        //async function searchBooks() {
+        //    const title = document.getElementById('title').value;
+        //    const authName = document.getElementById('authName').value;
+        //    const lang = document.getElementById('lang').value;
+        //    const publisher = document.getElementById('publisher').value;
+        //    const country = document.getElementById('country').value;
+        //    const genre = document.getElementById('genre').value;
+        //    const year = document.getElementById('year').value;
+
+        //    const queryParams = new URLSearchParams({
+        //        title,
+        //        autName: authName,
+        //        lang,
+        //        publisher,
+        //        country,
+        //        genre,
+        //        year
+        //    });
+
+        //    try {
+        //        const response = await fetch(`/api/books/search?${queryParams.toString()}`);
+        //        if (!response.ok) {
+        //            throw new Error('Network response was not ok');
+        //        }
+        //        const books = await response.json();
+        //        displayBooks(books);
+        //    } catch (error) {
+        //        console.error('Error fetching books:', error);
+        //        document.getElementById('results').innerHTML = '<p>Error fetching books.</p>';
+        //    }
+        //}
+
+        //function displayBooks(books) {
+        //    const resultsDiv = document.getElementById('results');
+        //    resultsDiv.innerHTML = ''; // Clear previous results
+
+        //    if (books.length === 0) {
+        //        resultsDiv.innerHTML = '<p>No books found.</p>';
+        //        return;
+        //    }
+
+        //    const table = document.createElement('table');
+        //    table.innerHTML = `
+        //                <thead>
+        //                    <tr>
+        //                        <th>Title</th>
+        //                        <th>Author</th>
+        //                        <th>Publisher</th>
+        //                        <th>Country</th>
+        //                        <th>Genre</th>
+        //                        <th>Language</th>
+        //                        <th>Year</th>
+        //                    </tr>
+        //                </thead>
+        //                <tbody></tbody>
+        //            `;
+
+        //    const tbody = table.querySelector('tbody');
+
+        //    books.forEach(book => {
+        //        const tr = document.createElement('tr');
+
+        //        tr.innerHTML = `
+        //                    <td>${book.title}</td>
+        //                    <td>${book.author.name}</td>
+        //                    <td>${book.publisher.name}</td>
+        //                    <td>${book.country.name}</td>
+        //                    <td>${book.genre.name}</td>
+        //                    <td>${book.language.name}</td>
+        //                    <td>${book.releaseYear.year}</td>
+        //                `;
+
+        //        tbody.appendChild(tr);
+        //    });
+
+        //    resultsDiv.appendChild(table);
+        //}
     </script>
 </body>
 </html>

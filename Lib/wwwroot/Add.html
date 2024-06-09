@@ -3,131 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book and Author</title>
-    <style>
-        @font-face {
-            font-family: 'Rhytmic_Rus';
-            src: url(Rhythmic_RUS.otf);
-        }
-
-        @font-face {
-            font-family: 'PP';
-            src: url(PPNeueMachina-Regular.otf);
-        }
-
-        body {
-            font-family: PP;
-            background-image: url(image1.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }
-
-        P {
-            width: 100%;
-            background-color: white;
-            font-family: PP;
-            text-align: center;
-            border-radius: 10px;
-        }
-
-        #updateBookForm {
-            margin-bottom: 20px;
-        }
-
-            #updateBookForm input {
-                margin-right: 10px;
-                padding: 5px;
-            }
-
-        #results table {
-            width: 100%;
-            border-radius: 10px;
-            border-collapse: collapse;
-        }
-
-        #results td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            background-color: #f2f2f2;
-        }
-
-        #results th {
-            border: 1px solid #ddd;
-            background-color: #f2f2f2;
-        }
-
-        .update-container {
-            max-width: 1000px;
-            margin: 100px auto;
-            padding: 20px;
-            /*background-color: #fff;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-            border-radius: 5px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #007cdb;
-        }
-
-        h2 {
-            text-align: center;
-            color: #d40c0c;
-            text-underline-offset: auto;
-        }
-
-        .kuks {
-            margin-bottom: 15px;
-        }
-
-            .kuks label {
-                display: block;
-                margin-bottom: 5px;
-                position: center;
-                color: #007bff;
-            }
-
-            .kuks input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid black;
-                border-radius: 10px;
-            }
-
-            .kuks button {
-                width: 102%;
-                padding: 10px;
-                background-color: #d40c0c;
-                color: white;
-                border: solid;
-                border-radius: 10px;
-                border-color: black;
-                cursor: pointer;
-            }
-
-                .kuks button:hover {
-                    background-color: #E30B5C;
-                }
-
-        header {
-            font-size: 24px;
-            padding: 15px;
-            background-color: gray;
-            text-align: center;
-            color: lightskyblue;
-            border-radius: 0 0 10px 10px;
-            font-family: Rhytmic_RUS;
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-    </style>
+    <title>Add</title>
+    <script src="AuhtCheckAdmin.js"></script>
+  <link rel="stylesheet" href="MyST/AddStyle.css" />
+    <link rel="stylesheet" href="MyST/FontConnector.css" />
 </head>
 <body>
-    <header>
-        SHEDEVROBIBLIOTEKA AS ADMIN
+    <header id="header">
+        <div class="top">
+            <div class="username-container"></div>
+            <div class="title-container">
+                <div class="title">Shedevrobiblioteka</div>
+            </div>
+            <div class="cont-but-log">
+                <button id="Button" type="button">Logout</button>
+            </div>
+        </div>
         <nav>
             <a href="SearchAdmin.html">Search</a>
             <a href="admin.html">Update</a>
@@ -148,7 +39,7 @@
                 <label for="LanguageName">Language</label>
                 <input type="text" id="LanguageName" name="LanguageName" required>
                 <button type="submit">Add Language</button>
-                </div>
+            </div>
         </form>
         <h1>Add Country</h1>
         <form id="addCountryForm">
@@ -156,61 +47,169 @@
                 <label for="CountryName">Country</label>
                 <input type="text" id="CountryName" name="CountryName" required>
                 <button type="submit">Add Country</button>
+            </div>
+        </form>
+        <h1>Add Release Year</h1>
+        <form id="addReleaseYearform">
+            <div class="kuks">
+                <label for="CountryName">Country</label>
+                <input type="number" id="ReleaseYear" name="ReleaseYear" required>
+                <button type="submit">Add Release Year</button>
                 </div>
         </form>
-    <!--<h1>Add Release Year</h1>
-    <form id="addReleaseYearform">
-        <div class="kuks">
-            <label for="CountryName">Country</label>
-            <input type="number" id="ReleaseYear" name="ReleaseYear" required>
-            <button type="submit">Add Release Year</button>
-            </div>-->
-    </form>
-    <h1>Add Genre</h1>
-    <form id="addGenreForm">
-        <div class="kuks">
-            <label for="GenreName">Genre</label>
-            <input type="text" id="GenreName" name="GenreName" required>
-            <button type="submit">Add Genre</button>
-        </div>
-    </form>
-    <h1>Add Publisher</h1>
-    <form id="addPublisherForm">
-        <div class="kuks">
-            <label for="PublisherName">Country</label>
-            <input type="text" id="PublisherName" name="PublisherName" required>
-            <button type="submit">Add Pubisher</button>
+        <h1>Add Genre</h1>
+        <form id="addGenreForm">
+            <div class="kuks">
+                <label for="GenreName">Genre</label>
+                <input type="text" id="GenreName" name="GenreName" required>
+                <button type="submit">Add Genre</button>
             </div>
-    </form>
+        </form>
+        <h1>Add Publisher</h1>
+        <form id="addPublisherForm">
+            <div class="kuks">
+                <label for="PublisherName">Country</label>
+                <input type="text" id="PublisherName" name="PublisherName" required>
+                <button type="submit">Add Pubisher</button>
+            </div>
+        </form>
         <h1>Add Book</h1>
         <form id="addBookForm">
             <div class="kuks">
                 <label for="title">Book Title:</label>
                 <input type="text" id="title" name="title" required>
 
-                <label for="authorId">Author ID:</label>
-                <input type="number" id="authorId" name="authorId" required>
+                <label for="new-author">Author:</label>
+                <select id="new-author" class="custom-select" placeholder="New Author" multiple size="5" required></select>
 
-                <label for="yearId">Year ID:</label>
-                <input type="number" id="yearId" name="yearId" required>
+                <label for="new-year">Year:</label>
+                <select id="new-year" class="custom-select" placeholder="New Year" multiple size="5" required></select>
 
-                <label for="countryId">Country ID:</label>
-                <input type="number" id="countryId" name="countryId" required>
+                <label for="new-country">Country:</label>
+                <select id="new-country" class="custom-select" placeholder="New Country" multiple size="5" required></select>
 
-                <label for="publisherId">Publisher ID:</label>
-                <input type="number" id="publisherId" name="publisherId" required>
+                <label for="new-publisher">Publisher:</label>
+                <select id="new-publisher" class="custom-select" placeholder="New Publisher" multiple size="5" required></select>
 
-                <label for="languageId">Language ID:</label>
-                <input type="number" id="languageId" name="languageId" required>
+                <label for="new-language">Language:</label>
+                <select id="new-language" class="custom-select" placeholder="New Language" multiple size="5" required></select>
 
-                <label for="genreId">Genre ID:</label>
-                <input type="number" id="genreId" name="genreId" required>
+                <label for="new-genre">Genre:</label>
+                <select id="new-genre" class="custom-select" placeholder="New Genre" multiple size="5" required></select>
 
                 <button type="submit">Add Book</button>
-                </div>
+            </div>
         </form>
     </div>
     <script>
+        document.getElementById('Button').addEventListener('click', function (event) {
+            event.preventDefault();
+            logout();
+        });
+        async function logout() {
+            try {
+                const response = await fetch('api/users/logout');
+
+                if (response.ok) {
+                    alert('Successful logout');
+                    window.location.href = 'login.html';
+                }
+                else alert('Something want wrong');
+            }
+            catch (error) {
+                console.error('Error logout:', error);
+            }
+        }
+        function nickPrint(username) {
+            const cont = document.querySelector('.username-container')
+            const div = document.createElement('div');
+            div.className = 'UsernameCl';
+            div.textContent = username;
+            cont.appendChild(div);
+        }
+        fetch('api/users/getLogin')
+            .then(response => response.json())
+            .then(data => nickPrint(data.name))
+            .catch(error => console.error('Error:', error));
+        document.getElementById('addBookForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('new-author').value;
+            const year = document.getElementById('new-year').value;
+            const country = document.getElementById('new-country').value;
+            const publisher = document.getElementById('new-publisher').value;
+            const language = document.getElementById('new-language').value;
+            const genre = document.getElementById('new-genre').value;
+
+            fetch('api/books/addBook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    author: author,
+                    year: year ? parseInt(year) : null,
+                    country: country,
+                    publisher: publisher,
+                    language: language,
+                    genre: genre
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Book ADDED successfully!');
+                    } else {
+                        alert('Failed to ADD book.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while adding the book.');
+                });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const populateSelect = (selectElement, data) => {
+                //const emptyOption = document.createElement('option');
+                //emptyOption.value = '';
+                //emptyOption.textContent = '';
+                /*  selectElement.appendChild(emptyOption);*/
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    selectElement.appendChild(option);
+                });
+            };
+
+
+            fetch('api/authors/getAllAuthors')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-author'), data))
+                .catch(error => console.error('Error:', error));
+            fetch('api/releaseyears/getAllYears')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-year'), data))
+                .catch(error => console.error('Error:', error));
+            fetch('api/countries/getAllCountries')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-country'), data))
+                .catch(error => console.error('Error:', error));
+            fetch('api/publishers/getAllPublishers')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-publisher'), data))
+                .catch(error => console.error('Error:', error));
+            fetch('api/languages/getAllLanguages')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-language'), data))
+                .catch(error => console.error('Error:', error));
+            fetch('api/genres/getAllGenres')
+                .then(response => response.json())
+                .then(data => populateSelect(document.getElementById('new-genre'), data))
+                .catch(error => console.error('Error:', error));
+        });
         document.getElementById('addAuthorForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -229,8 +228,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('Author added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Author could not be added. It might already exist.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
@@ -257,8 +257,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('Genre added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Genre could not be added. It might already exist.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
@@ -284,8 +285,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('Publisher added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Publisher could not be added. It might already exist.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
@@ -312,8 +314,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('Language added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Language could not be added. It might already exist.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
@@ -339,8 +342,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('Country added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Country could not be added. It might already exist.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
@@ -349,73 +353,36 @@
                 });
         });
 
-        //document.getElementById('addReleaseYearform').addEventListener('submit', function (event) {
-        //    event.preventDefault();
-
-        //    const authorName = document.getElementById('ReleaseYear').value;
-
-        //    fetch('/api/releaseyears/addYear', {
-        //        method: 'POST',
-        //        headers: {
-        //            'Content-Type': 'application/json'
-        //        },
-        //        body: JSON.stringify({
-        //            year: ReleaseYear
-        //        })
-        //    })
-        //        .then(response => response.json())
-        //        .then(data => {
-        //            if (data.success) {
-        //                alert('Year added successfully!');
-        //            } else {
-        //                alert('Year could not be added. It might already exist.');
-        //            }
-        //        })
-        //        .catch(error => {
-        //            console.error('Error:', error);
-        //            alert('An error occurred while adding the year: ' + error.message);
-        //        });
-        //});
-
-        document.getElementById('addBookForm').addEventListener('submit', function (event) {
+        document.getElementById('addReleaseYearform').addEventListener('submit', function (event) {
             event.preventDefault();
 
-            const bookTitle = document.getElementById('title').value;
-            const authorId = parseInt(document.getElementById('authorId').value);
-            const yearId = parseInt(document.getElementById('yearId').value);
-            const countryId = parseInt(document.getElementById('countryId').value);
-            const publisherId = parseInt(document.getElementById('publisherId').value);
-            const languageId = parseInt(document.getElementById('languageId').value);
-            const genreId = parseInt(document.getElementById('genreId').value);
+            const ReleaseYear = document.getElementById('ReleaseYear').value;
 
-            fetch('/api/books/addBook', {
+            fetch('api/releaseyears/addYear', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    title: bookTitle,
-                    authorId: authorId,
-                    yearId: yearId,
-                    countryId: countryId,
-                    publisherId: publisherId,
-                    languageId: languageId,
-                    genreId: genreId
+                    year: ReleaseYear
                 })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Book ADDED successfully!');
+                        alert('Year added successfully!');
+                        window.location.reload();
                     } else {
-                        alert('Failed to ADD book.');
+                        alert(data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while adding the book.');
+                    alert('An error occurred while adding the year: ' + error.message);
                 });
         });
+
+
     </script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="LoginCheck.js"></script>
     <style>
         @font-face {
             font-family: 'Rhytmic_RUS';
@@ -84,10 +85,10 @@
                 }
 
         #register-button button {
-            background-color: 5ACA04
+            background-color: #E30B5C
         }
             #register-button button:hover {
-                background-color: 2DF205;
+                background-color: #2DF205;
             }
         .error-message {
             color: black;
@@ -136,7 +137,8 @@
 
             const response = await fetch('/api/users/login', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                credentials: 'include'
             });
 
             const data = await response.json();

@@ -2,13 +2,13 @@
 {
     public class BookUpdate
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public int AuthorId { get; set; }
-        public int YearId { get; set; }
-        public int CountryId { get; set; }
-        public int PublisherId { get; set; }
-        public int LanguageId { get; set; }
-        public int GenreId { get; set; }
+        public string ExistingTitle { get; set; }
+        public string NewTitle { get; set; }
+        public string NewAuthor { get; set; }
+        public int? NewYear { get; set; }
+        public string NewCountry { get; set; }
+        public string NewPublisher { get; set; }
+        public string NewLanguage { get; set; }
+        public string NewGenre { get; set; }
     }
 }

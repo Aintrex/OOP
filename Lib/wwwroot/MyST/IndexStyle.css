@@ -1,0 +1,158 @@
+﻿body {
+    font-family: PP;
+    background-image: url(../images/booksimage.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+P {
+    width: 100%;
+    background-color: white;
+    font-family: PP;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#searchForm {
+    margin-bottom: 20px;
+}
+
+    #searchForm input {
+        margin-right: 10px;
+        padding: 5px;
+    }
+
+#results table {
+    width: 100%;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+
+#results td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    background-color: #f2f2f2;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#results th {
+    border: 1px solid #ddd;
+    background-color: #f2f2f2;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.container {
+    max-width: 1000px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #007cdb;
+}
+
+h2 {
+    text-align: center;
+    color: #d40c0c;
+    text-underline-offset: auto;
+}
+
+.kuks {
+    margin-bottom: 15px;
+}
+
+    .kuks label {
+        display: block;
+        margin-bottom: 5px;
+        position: center;
+        color: #007bff;
+    }
+
+    .kuks input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+
+    .kuks button {
+        width: 100%;
+        padding: 10px;
+        background-color: #d40c0c;
+        color: white;
+        border: solid;
+        border-radius: 10px;
+        border-color: black;
+        cursor: pointer;
+    }
+
+        .kuks button:hover {
+            background-color: #E30B5C;
+        }
+
+header {
+    font-size: 24px;
+    padding: 15px;
+    background-color: gray;
+    color: lightskyblue;
+    border-radius: 0 0 10px 10px;
+    font-family: Rhytmic_RUS;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    top: 0;
+    z-index: 1000;
+}
+
+.scrollbody {
+    /* display: inline-block;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow-x: auto;*/
+    overflow-y: auto;
+    max-width: 150px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.username-container {
+    position: relative;
+    left: 10px; /* Adjust as needed */
+}
+
+.title-container {
+    flex-grow: 1;
+    text-align: center;
+}
+
+#header button {
+    margin-right: 30px;
+    text-align: right;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-color:#007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.button-logout {
+ 
+}

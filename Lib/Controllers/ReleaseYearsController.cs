@@ -24,22 +24,25 @@ namespace Lib.Controllers
         }
 
         // GET api/<ReleaseYearsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("getAllYears")]
+       public async Task<IActionResult> GetYears()
         {
-            return "value";
+            IEnumerable<int> yrs = await _ryServ.GetAllYears();
+            return Ok(yrs);
         }
 
         // POST api/<ReleaseYearsController>
         [HttpPost("addYear")]
        public async Task<IActionResult> CreateRyr([FromBody] ReleaseYearCreate model)
         {
+            if (model.Year<1 || model.Year>DateTime.Now.Year)
+                return Ok(new {success = false, message = "Year can't be lower 1 or higher current year"});
             var ry = await _ryServ.CreateRY(model.Year);
             if (ry != 0)
             {
                 return Ok(new { success = true });
             }
-            return Ok(new { success = false });
+            return Ok(new { success = false, message = "Year could not be added. It might already exist." });
         }
 
         // PUT api/<ReleaseYearsController>/5
