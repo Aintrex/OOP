@@ -1,4 +1,5 @@
 ﻿using Lib.ModelReq;
+using Lib.Models;
 using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,26 @@ namespace Lib.Controllers
         public PublishersController(IPublisherInterface pubService)
         {
             _pubService = pubService;
+        }
+        [HttpDelete("deletePublisher")]
+            public IActionResult DeletePublihser(string pbl)
+            {
+            var author = _pubService.GetPublisherByName(pbl);
+            if (author == null)
+            {
+                return NotFound(new { success = false, message = "Publisher not found" });
+            }
+
+            // Check if the author is associated with any books
+            var booksWithAuthor = _pubService.AssociatedPub(author.Id);
+            if (booksWithAuthor)
+            {
+                return BadRequest(new { success = false, message = "Cannot delete publisher because they are associated with books" });
+            }
+
+            if (!_pubService.Deletepublisher(pbl))
+                return NotFound();
+            return Ok(new { success = true, message = "Publisher deleted successfully" });
         }
         // GET: api/<PublishersController>
         [HttpGet("getAllPublishers")]

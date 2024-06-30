@@ -5,18 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <script src="LoginCheck.js"></script>
+    <link rel="stylesheet" href="MyST/FontConnector.css" />
     <style>
-        @font-face{
-        font-family: 'Rhytmic_RUS';
-        /* local: ('Rhytmic_RUS');*/
-        src: url(Rhythmic_RUS.otf);
-        }
-
-        @font-face {
-            font-family: 'PP';
-            src: url(PPNeueMachina-Regular.otf);
-        }
-
         header {
             font-size: 24px;
             padding: 15px;
@@ -36,16 +26,16 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url(image3.jpg);
+            background-image: url(images/booksimage.jpg);
             background-repeat: no-repeat;
             background-size: cover;
         }
 
         .login-container {
-            /*background-color: white;*/
+            background-color: white;
             padding: 20px;
             border-radius: 5px;
-            /*            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
 
@@ -124,7 +114,7 @@
                 window.location.href = 'login.html';
             } else {
                 const data = await response.json();
-                document.getElementById('error-message').innerText =  'Registartion is failed. Username with this login has already exists';
+                document.getElementById('error-message').innerText =  data.message;
             }
         }
     </script>

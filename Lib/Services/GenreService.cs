@@ -10,6 +10,9 @@ namespace Lib.Services
         Task<int> CreateGenre(string name);
         Task<List<string>> GetAllGenres();
         bool ValidString(string str);
+        Genre GetGenreByName(string genre);
+        bool AssociatedGen(int gid);
+        bool DeleteGenre(string name);
     }
     public class GenreService : IGenreService
     {
@@ -17,6 +20,28 @@ namespace Lib.Services
         public GenreService(LibContext context)
         {
             _dbContext = context;
+        }
+        public bool DeleteGenre(string name)
+        {
+            var genre = _dbContext.Genres.FirstOrDefault(x => x.Name == name);
+            if (genre == null)
+            {
+                return false;
+            }
+            _dbContext.Genres.Remove(genre);
+            _dbContext.SaveChanges();
+            return true;
+        }
+        public bool AssociatedGen(int gid)
+        {
+            if (_dbContext.Books.Any(x => x.GenreId == gid))
+                return true;
+            return false;
+        }
+        public Genre GetGenreByName(string name)
+        {
+            var genr = _dbContext.Genres.FirstOrDefault(x=>x.Name== name);
+            return genr;
         }
         public bool ValidString(string str)
         {

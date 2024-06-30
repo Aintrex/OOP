@@ -10,6 +10,9 @@ namespace Lib.Services
         Task<int> CreateCountry(string name);
         Task<List<string>> GetAllCountries();
         bool ValidString(string str);
+        Country GetCountryByName(string name);
+        bool AssociatedCnt(int cid);
+        bool DeleteCountry(string cn);
     }
     public class CountryService:ICountryInterface
     {
@@ -17,6 +20,28 @@ namespace Lib.Services
         public CountryService(LibContext context)
         {
             _context = context;
+        }
+        public bool DeleteCountry(string cn)
+        {
+            var cnt = _context.Countries.FirstOrDefault(x=>x.Name == cn);
+            if (cnt == null)
+                return false;
+            _context.Countries.Remove(cnt);
+            _context.SaveChanges();
+            return true;
+        }
+        public bool AssociatedCnt(int cid)
+        {
+            if(_context.Books.Any(x=>x.CountryId == cid))
+            {
+                return true;
+            }
+            return false;
+        }
+        public Country GetCountryByName(string naem)
+        {
+            var count = _context.Countries.FirstOrDefault(x => x.Name == naem);
+            return count;
         }
         public bool ValidString(string str)
         {

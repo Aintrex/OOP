@@ -2,7 +2,7 @@
     font-family: PP;
     background-image: url(../images/booksimage.jpg);
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     margin: 0;
     padding: 0;
 }

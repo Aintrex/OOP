@@ -17,7 +17,7 @@ namespace Lib.Controllers
         {
             _bookService = bookService;
         }
-        [HttpDelete]
+        [HttpDelete("deleteBook")]
         public async Task<IActionResult> DeleteBook(string title)
         {
             var book = _bookService.DeleteBook(title);

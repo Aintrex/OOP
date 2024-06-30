@@ -15,7 +15,7 @@
             <div class="title">Shedevrobiblioteka</div>
         </div>
         <div class="cont-but-log">
-                <button type="button">Logout</button>
+                <button id="Button" type="button">Logout</button>
         </div>
     </header>
         <div class="container">
@@ -58,7 +58,7 @@
         </div>
 
         <script>
-            document.getElementById('header').addEventListener('click', function (event) {
+            document.getElementById('Button').addEventListener('click', function (event) {
                 event.preventDefault();
                 logout();
             });

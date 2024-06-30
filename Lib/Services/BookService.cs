@@ -120,35 +120,54 @@ namespace Lib.Services
         }
         public async Task<List<Book>> GetBooksFilterAsync(string? title, string? autName, string? publisher, string? country, string? genre, string? lang, int? year)
         {
-            var booksQuery = _dbContext.Books.Include(b => b.author).Include(b => b.publisher).Include(b => b.country).Include(b => b.Genre).Include(b => b.language).Include(b => b.ReleaseYear) as IQueryable<Book>;
+
+            var booksQuery = _dbContext.Books.OrderBy(x=>x.Title).Include(b => b.author).Include(b => b.publisher).Include(b => b.country).Include(b => b.Genre).Include(b => b.language).Include(b => b.ReleaseYear) as IQueryable<Book>;
 
             if (!string.IsNullOrEmpty(title))
             {
+                title = string.Join(" ", title.Split(' ')
+                .Where(x => !string.IsNullOrEmpty(x))
+                );
                 booksQuery = booksQuery.Where(b => b.Title.Contains(title));
             }
 
             if (!string.IsNullOrEmpty(autName))
             {
+                autName = string.Join(" ", autName.Split(' ')
+                .Where(x => !string.IsNullOrEmpty(x))
+                );
                 booksQuery = booksQuery.Where(b => b.author.Name.Contains(autName));
             }
 
             if (!string.IsNullOrEmpty(publisher))
             {
+                publisher = string.Join(" ", publisher.Split(' ')
+                                .Where(x => !string.IsNullOrEmpty(x))
+                                );
                 booksQuery = booksQuery.Where(b => b.publisher.Name.Contains(publisher));
             }
 
             if (!string.IsNullOrEmpty(country))
             {
+                country = string.Join(" ", country.Split(' ')
+                .Where(x => !string.IsNullOrEmpty(x))
+                );
                 booksQuery = booksQuery.Where(b => b.country.Name.Contains(country));
             }
 
             if (!string.IsNullOrEmpty(genre))
             {
+                genre = string.Join(" ", genre.Split(' ')
+               .Where(x => !string.IsNullOrEmpty(x))
+               );
                 booksQuery = booksQuery.Where(b => b.Genre.Name.Contains(genre));
             }
 
             if (!string.IsNullOrEmpty(lang))
             {
+                lang = string.Join(" ", lang.Split(' ')
+               .Where(x => !string.IsNullOrEmpty(x))
+               );
                 booksQuery = booksQuery.Where(b => b.language.Name.Contains(lang));
             }
 

@@ -8,10 +8,12 @@ namespace Lib.Services
 {
     public interface IAuthorService
     {
-        Task Deleteauthor(int authId);
+        bool Deleteauthor(string authId);
         Task<int> CreateAuthor(string name);
         Task<List<string>> GetAllAuthors();
         bool ValidString(string check);
+        Author GetAuthorByName(string name);
+        bool AssociatedAut(int aid);
     }
 
     public class AuthorService : IAuthorService
@@ -20,6 +22,19 @@ namespace Lib.Services
         public AuthorService(LibContext dbContext)
         {
             _dbContext = dbContext;
+        }
+        public bool AssociatedAut(int aid)
+        {
+            if(_dbContext.Books.Any(x=>x.AuthorId==aid))
+            {
+                return true;
+            }
+            return false;
+        }
+        public Author GetAuthorByName(string name)
+        {
+            var autr =  _dbContext.Authors.FirstOrDefault(x => x.Name == name);
+            return autr;
         }
         public async Task<List<string>> GetAllAuthors()
         {
@@ -31,11 +46,14 @@ namespace Lib.Services
             var regex = new System.Text.RegularExpressions.Regex("^[a-zA-Zа-яА-ЯёЁ\\s]+$");
             return regex.IsMatch(check);
         }
-        public async Task Deleteauthor(int authId)
+        public bool Deleteauthor(string authId)
         {
-            var aut = await _dbContext.Authors.FirstOrDefaultAsync(x=>x.Id== authId);
+            var aut = _dbContext.Authors.FirstOrDefault(x=>x.Name== authId);
+            if (aut == null)
+                return false;
             _dbContext.Authors.Remove(aut);
             _dbContext.SaveChanges();
+            return true;
         }
         public async Task<int> CreateAuthor (string name)
         {

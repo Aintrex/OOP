@@ -41,12 +41,13 @@ namespace Lib.Controllers
         public async Task<IActionResult> RegisterUser([FromForm] string username, [FromForm] string password)
         {
             var user = await _userService.CreateUserAsync(username, password);
-
+            if (user == -1)
+                return BadRequest(new { success = false, message = "Registartion is failed. Username can contain only letters, digits or _" });
             if (user != 0)
             {
-                return Ok();
+                return Ok(new { success = true }); ;
             }
-            return BadRequest();
+            return BadRequest(new {success = false, message = "Registartion is failed. User with this name already exists" });
         }
 
 

@@ -27,8 +27,9 @@ namespace Lib.Services
             {
                 return 0;
             }
-
-
+            var regex = new System.Text.RegularExpressions.Regex("^[a-zA-Z0-9_]+$");
+            if (!regex.IsMatch(username))
+                return -1;
             User user = new User
             {
                 Login = username,

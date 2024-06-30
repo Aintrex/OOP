@@ -1,4 +1,5 @@
 ﻿using Lib.ModelReq;
+using Lib.Models;
 using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +17,25 @@ namespace Lib.Controllers
             _languageService = languageService;
         }
 
-        // GET: api/<LanguagesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpDelete("deleteLanguage")]
+        public IActionResult DeleteLng(string lng)
         {
-            return new string[] { "value1", "value2" };
+            Language language = _languageService.GetLanguageByName(lng);
+            if (language == null)
+            {
+                return NotFound(new { success = false, message = "Author not found" });
+            }
+
+            // Check if the author is associated with any books
+            var booksWithAuthor = _languageService.AssociatedLng(language.Id);
+            if (booksWithAuthor)
+            {
+                return BadRequest(new { success = false, message = "Cannot delete author because they are associated with books" });
+            }
+
+            if (!_languageService.Deletelanguage(lng))
+                return NotFound();
+            return Ok(new { success = true, message = "Author deleted successfully" });
         }
 
         // GET api/<LanguagesController>/5

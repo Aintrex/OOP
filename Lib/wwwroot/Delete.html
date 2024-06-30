@@ -6,7 +6,7 @@
     <title>Shedevrobiblioteka</title>
     <script src="AuhtCheckAdmin.js">
     </script>
-    <link rel="stylesheet" href="MyST/adminStyle.css">
+    <link rel="stylesheet" href="MyST/DeleteStyle.css">
     <link rel="stylesheet" href="MyST/FontConnector.css">
 </head>
 <body>
@@ -23,45 +23,252 @@
         <nav>
             <a href="SearchAdmin.html">Search</a>
             <a href="admin.html">Update</a>
+            <a href="Add.html">Add</a>
         </nav>
     </header>
     <div class="update-container">
-        <div class="kuks">
-            <label for="new-author">Author:</label>
-            <!--<input type="text" id="new-author" placeholder="New Author">-->
-            <select id="new-author" class="custom-select" placeholder="New Author" multiple size="5"></select>
-        </div>
-        <div class="kuks">
-            <label for="new-year">Year:</label>
-            <select id="new-year" class="custom-select" placeholder="New Year" multiple size="5"></select>
-        </div>
-        <div class="kuks">
-            <label for="new-country">Country:</label>
-            <select id="new-country" class="custom-select" placeholder="New Country" multiple size="5"></select>
-        </div>
-        <div class="kuks">
-            <label for="new-publisher">Publisher:</label>
-            <select id="new-publisher" class="custom-select" placeholder="New Publisher" multiple size="5"></select>
-        </div>
-        <div class="kuks">
-            <label for="new-language">Language:</label>
-            <select id="new-language" class="custom-select" placeholder="New Language" multiple size="5"></select>
-        </div>
-        <div class="kuks">
-            <label for="new-genre">Genre:</label>
-            <select id="new-genre" class="custom-select" placeholder="New Genre" multiple size="5"></select>
-        </div>
-        <h1>Add Book</h1>
-        <form id="addBookForm">
+        <h1>Delete author</h1>
+        <form id="deleteAuthorForm">
             <div class="kuks">
-                <label for="title">Book Title:</label>
-                <select type="text" id="existing-Title" name="title" required></select>
-
-                <button type="submit">Add Book</button>
+                <label for="new-author">Author:</label>
+                <select id="new-author" class="custom-select" placeholder="New Author" multiple size="5"></select>
+                <button>Delete</button>
             </div>
         </form>
+        <!--<h1>Delete year</h1>
+        <form id="deleteYearForm">
+            <div class="kuks">
+                <label for="new-year">Year:</label>
+                <select id="new-year" class="custom-select" placeholder="New Year" multiple size="5"></select>
+            </div>
+        </form>-->
+        <h1>Delete country</h1>
+        <form id="deleteCountryForm">
+            <div class="kuks">
+                <label for="new-country">Country:</label>
+                <select id="new-country" class="custom-select" placeholder="New Country" multiple size="5"></select>
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+        <h1>Delete Publisher</h1>
+        <form id="deletePublisherForm">
+            <div class="kuks">
+                <label for="new-publisher">Publisher:</label>
+                <select id="new-publisher" class="custom-select" placeholder="New Publisher" multiple size="5"></select>
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+        <h1>Delete language</h1>
+        <form id="deleteLanguageForm">
+            <div class="kuks">
+                <label for="new-language">Language:</label>
+                <select id="new-language" class="custom-select" placeholder="New Language" multiple size="5"></select>
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+        <h1>Delete genre</h1>
+        <form id="deleteGenreForm">
+            <div class="kuks">
+                <label for="new-genre">Genre:</label>
+                <select id="new-genre" class="custom-select" placeholder="New Genre" multiple size="5"></select>
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+            <h1>Delete book</h1>
+            <form id="deleteBookForm">
+                <div class="kuks">
+                    <label for="title">Book Title:</label>
+                    <select type="text" id="existing-title" name="title" multiple size="5" required></select>
+
+                    <button type="submit">Delete Book</button>
+                </div>
+            </form>
     </div>
     <script>
+        document.getElementById('deletePublisherForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deletePublisher();
+        });
+        async function deletePublisher() {
+            const pbl = document.getElementById('new-publisher').value;
+            await fetch(`api/publishers/deletePublisher?pbl=${encodeURIComponent(pbl)}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Erroe', error);
+                })
+        }
+        document.getElementById('deleteGenreForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deleteGenre();
+        });
+        async function deleteGenre() {
+            const gnr = document.getElementById('new-genre').value;
+            await fetch(`api/genres/deleteGenre?gnr=${encodeURIComponent(gnr)}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Erroe', error);
+                })
+        }
+        document.getElementById('deleteCountryForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deleteCountry();
+        });
+        async function deleteCountry() {
+            const lng = document.getElementById('new-country').value;
+            await fetch(`api/countries/deleteCountry?cntr=${encodeURIComponent(lng)}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Erroe', error);
+                })
+        }
+        document.getElementById('deleteAuthorForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deleteAuthor();
+        });
+        document.getElementById('deleteLanguageForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deleteLanguage();
+        });
+        async function deleteLanguage() {
+            const lng = document.getElementById('new-language').value;
+            await fetch(`api/languages/deleteLanguage?lng=${encodeURIComponent(lng)}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Erroe', error);
+                })
+        }
+        document.getElementById('deleteAuthorForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            deleteAuthor();
+        });
+        async function deleteAuthor()
+        {
+            const aut = document.getElementById('new-author').value;
+            await fetch(`api/authors/deleteAuthor?aut=${encodeURIComponent(aut)}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Erroe', error);
+                })
+        }
+        document.getElementById('deleteBookForm').addEventListener('submit', function (event) {
+            event.preventDefault(); 
+            deleteBook();
+        });
+        async function deleteBook() {
+            const title = document.getElementById('existing-title').value;
+                await fetch(`api/books/deleteBook?title=${encodeURIComponent(title)}`,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message)
+                            window.location.reload();
+                        }
+                        else {
+                            alert(data.message)
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erroe', error);
+                    })
+        }
+        document.querySelectorAll('select[multiple]').forEach(selectElement => {
+            selectElement.addEventListener('click', function (e) {
+                const selectedOptions = Array.from(this.options).filter(option => option.selected);
+                if (selectedOptions.length > 1) {
+                    selectedOptions.forEach(option => {
+                        option.selected = false;
+                    });
+                    e.target.selected = true;
+                }
+            });
+        });
         document.getElementById('Button').addEventListener('click', function (event) {
             event.preventDefault();
             logout();

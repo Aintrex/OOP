@@ -100,14 +100,25 @@
             .then(response => response.json())
             .then(data => nickPrint(data.name))
             .catch(error => console.error('Error:', error));
-        document.querySelector('select[multiple]').addEventListener('click', function (e) {
-            var selected = Array.from(this.options).filter(option => option.selected);
-            if (selected.length > 1) {
-                selected.forEach(option => {
-                    option.selected = false;
-                });
-                e.target.selected = true;
-            }
+        //document.querySelectorAll('select[multiple]').addEventListener('click', function (e) {
+        //    var selected = Array.from(this.options).filter(option => option.selected);
+        //    if (selected.length > 1) {
+        //        selected.forEach(option => {
+        //            option.selected = false;
+        //        });
+        //        e.target.selected = true;
+        //    }
+        //});
+        document.querySelectorAll('select[multiple]').forEach(selectElement => {
+            selectElement.addEventListener('click', function (e) {
+                const selectedOptions = Array.from(this.options).filter(option => option.selected);
+                if (selectedOptions.length > 1) {
+                    selectedOptions.forEach(option => {
+                        option.selected = false;
+                    });
+                    e.target.selected = true;
+                }
+            });
         });
 
         document.addEventListener('DOMContentLoaded', () => {

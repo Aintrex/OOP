@@ -22,7 +22,23 @@ namespace Lib.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-
+        [HttpDelete("deleteCountry")]
+        public IActionResult DeleteCountry(string cntr)
+        {
+            var country = _country.GetCountryByName(cntr);
+            if (country == null)
+            {
+                return NotFound(new {success = false, message = "Country not found"});
+            }
+            var countrywithbook = _country.AssociatedCnt(country.Id);
+            if (countrywithbook)
+            {
+                return BadRequest(new { success = false, message = "Country is associated with book can not delete!!!" });
+            }
+            if (!_country.DeleteCountry(cntr))
+                return NotFound();
+            return Ok(new {success = true, message = "Country delete successfully"});
+        }
         // GET api/<CountriesController>/5
         [HttpGet("getAllCountries")]
         public async Task<IActionResult> GetCountries()
@@ -46,6 +62,7 @@ namespace Lib.Controllers
             }
             return Ok(new { success = false, message = "Country could not be added. It might already exist. " });
         }
+
 
         // PUT api/<CountriesController>/5
         [HttpPut("{id}")]

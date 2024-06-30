@@ -11,11 +11,34 @@ namespace Lib.Services
         Task<int> CreatePub(string name);
         Task<List<string>> GetAllPublishers();
         bool ValidString(string str);
+        Publisher GetPublisherByName(string name);
+        bool AssociatedPub(int pid);
+        bool Deletepublisher(string name);
     }
     public class PublisherService:IPublisherInterface
     {
         private readonly LibContext _context;
         public PublisherService(LibContext context) {  _context = context; }
+        public bool Deletepublisher(string name)
+        {
+            var publisher = _context.Publishers.FirstOrDefault(x => x.Name == name);
+            if (publisher == null)
+                return false;
+            _context.Publishers.Remove(publisher);
+            _context.SaveChanges();
+            return true;
+        }
+        public bool AssociatedPub(int pid)
+        {
+            if (_context.Books.Any(x => x.PublisherId == pid))
+                return true;
+            return false;
+        }
+        public Publisher GetPublisherByName(string name)
+        {
+            var pbl = _context.Publishers.FirstOrDefault(x => x.Name == name);
+            return pbl;
+        }
         public bool ValidString(string str)
         {
             var regex = new System.Text.RegularExpressions.Regex("^[a-zA-Zа-яА-ЯёЁ\\s]+$");

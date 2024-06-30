@@ -22,6 +22,7 @@
         <nav>
             <a href="SearchAdmin.html">Search</a>
             <a href="admin.html">Update</a>
+            <a href="Delete.html">Delete</a>
         </nav>
     </header>
     <div class="update-container">
@@ -36,7 +37,7 @@
         <h1>Add Language</h1>
         <form id="addLanguageForm">
             <div class="kuks">
-                <label for="LanguageName">Language</label>
+                <label for="LanguageName">Language:</label>
                 <input type="text" id="LanguageName" name="LanguageName" required>
                 <button type="submit">Add Language</button>
             </div>
@@ -44,7 +45,7 @@
         <h1>Add Country</h1>
         <form id="addCountryForm">
             <div class="kuks">
-                <label for="CountryName">Country</label>
+                <label for="CountryName">Country:</label>
                 <input type="text" id="CountryName" name="CountryName" required>
                 <button type="submit">Add Country</button>
             </div>
@@ -52,7 +53,7 @@
         <h1>Add Release Year</h1>
         <form id="addReleaseYearform">
             <div class="kuks">
-                <label for="CountryName">Country</label>
+                <label for="CountryName">Year:</label>
                 <input type="number" id="ReleaseYear" name="ReleaseYear" required>
                 <button type="submit">Add Release Year</button>
                 </div>
@@ -60,7 +61,7 @@
         <h1>Add Genre</h1>
         <form id="addGenreForm">
             <div class="kuks">
-                <label for="GenreName">Genre</label>
+                <label for="GenreName">Genre:</label>
                 <input type="text" id="GenreName" name="GenreName" required>
                 <button type="submit">Add Genre</button>
             </div>
@@ -68,7 +69,7 @@
         <h1>Add Publisher</h1>
         <form id="addPublisherForm">
             <div class="kuks">
-                <label for="PublisherName">Country</label>
+                <label for="PublisherName">Publisher:</label>
                 <input type="text" id="PublisherName" name="PublisherName" required>
                 <button type="submit">Add Pubisher</button>
             </div>
@@ -102,6 +103,15 @@
         </form>
     </div>
     <script>
+        document.querySelector('select[multiple]').addEventListener('click', function (e) {
+            var selected = Array.from(this.options).filter(option => option.selected);
+            if (selected.length > 1) {
+                selected.forEach(option => {
+                    option.selected = false;
+                });
+                e.target.selected = true;
+            }
+        });
         document.getElementById('Button').addEventListener('click', function (event) {
             event.preventDefault();
             logout();
@@ -161,6 +171,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Book ADDED successfully!');
+                        window.location.reload();
                     } else {
                         alert('Failed to ADD book.');
                     }

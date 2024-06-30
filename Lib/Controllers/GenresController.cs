@@ -1,4 +1,5 @@
 ﻿using Lib.ModelReq;
+using Lib.Models;
 using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,22 @@ namespace Lib.Controllers
             IEnumerable<string> gnr = await _genreService.GetAllGenres();
             return Ok(gnr);
         }
-
+        [HttpDelete("deleteGenre")]
+        public IActionResult DeleteGenre(string gnr) {
+            var genre = _genreService.GetGenreByName(gnr);
+            if(genre == null)
+            {
+                return NotFound(new { success = false, message = "Genre not found" });
+            }
+            var BooksWithGenre = _genreService.AssociatedGen(genre.Id);
+            if(BooksWithGenre)
+            {
+                return BadRequest(new { success = false, message = "Cannot delete genre because it's connected" });
+            }
+            if (!_genreService.DeleteGenre(gnr))
+                return NotFound();
+            return Ok(new { success = true, message = "Genre deleted successfully" });
+        }
         // POST api/<GenresController>
         [HttpPost("addGenre")]
         public async Task<IActionResult> Creategen([FromBody] GenreCreate model)

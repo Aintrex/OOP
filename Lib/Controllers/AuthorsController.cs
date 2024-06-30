@@ -2,6 +2,8 @@
 using Lib.Models;
 using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +18,26 @@ namespace Lib.Controllers
         public AuthorsController(IAuthorService authorService)
         {
             _authorService = authorService;
+        }
+        [HttpDelete("deleteAuthor")]
+        public IActionResult DeleteAut(string aut)
+        {
+            Author author = _authorService.GetAuthorByName(aut);
+            if (author == null)
+            {
+                return NotFound(new { success = false, message = "Author not found" });
+            }
+
+            // Check if the author is associated with any books
+            var booksWithAuthor = _authorService.AssociatedAut(author.Id);
+            if (booksWithAuthor)
+            {
+                return BadRequest(new { success = false, message = "Cannot delete author because they are associated with books" });
+            }
+
+            if (!_authorService.Deleteauthor(aut))
+                return NotFound();
+            return Ok(new { success = true, message = "Author deleted successfully" });
         }
         [HttpGet("getAllAuthors")]
         public async Task<IActionResult> GetAuthors()
